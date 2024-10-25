@@ -1,8 +1,11 @@
 import express from 'express';
-import tasksRouter from './routes/tasks.js';
 import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
+import tasksRouter from './routes/tasks.js';
 
 const app = express();
+
+app.use(helmet());
 
 const limiter = rateLimit({
         windowMs: 1 * 60 * 1000, // 1 minute
