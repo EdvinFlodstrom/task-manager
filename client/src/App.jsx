@@ -1,9 +1,11 @@
-function App() {
+import './css/App.css';
 
-  return (
-    <>
-    </>
-  )
-}
+const App = () => {
+        return (
+                <div className='app-container'>
+                        <h1>Task Manager</h1>
+                </div>
+        );
+};
 
-export default App
+export default App;
