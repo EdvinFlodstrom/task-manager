@@ -1,9 +1,20 @@
 import express from 'express';
+import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import tasksRouter from './routes/tasks.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
+
+// CORS config based on environment variable
+const corsOptions = {
+        origin: process.env.CORS_ALLOWED_ORIGIN,
+};
+
+app.use(cors(corsOptions));
 
 app.use(helmet());
 
