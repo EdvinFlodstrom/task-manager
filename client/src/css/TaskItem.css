@@ -4,7 +4,7 @@
 	align-items: center;
 	padding: 1rem;
 	border-bottom: 1px solid oklch(85% 0 0);
-	background-color: oklch(98% 0.03 250);
+	background-color: oklch(97% 0.03 240);
 	border-radius: 0.5rem;
 	transition: box-shadow 0.3s ease;
 }
@@ -37,15 +37,11 @@
 	}
 }
 
-.task-delete-button:hover {
-	background-color: oklch(40% 0.14 27);
-}
-
 .task-info {
 	flex-basis: 80%;
 	padding: 0 1rem;
 	font-size: 1.1rem;
-	color: oklch(35% 0.1 240);
+	color: oklch(10% 0.1 240);
 }
 
 @media (max-width: 480px) {
