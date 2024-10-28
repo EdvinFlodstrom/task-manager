@@ -7,6 +7,7 @@ import {
         selectError,
 } from '../redux/taskSlice/selectors';
 import TaskItem from './TaskItem';
+import '../css/TaskList.css';
 
 const TaskList = () => {
         const dispatch = useDispatch();
@@ -16,9 +17,15 @@ const TaskList = () => {
         const loading = useSelector(selectLoadingStatus);
         const error = useSelector(selectError);
 
+        // Fetch tasks immediately
         useEffect(() => {
                 dispatch(fetchTasks());
         }, [dispatch]);
+
+        // Funciton to re-fetch tasks
+        const refreshTasks = () => {
+                dispatch(fetchTasks());
+        };
 
         // TODO: Add options for sorting
         // Sort tasks by due date in ascending order
@@ -30,11 +37,19 @@ const TaskList = () => {
         if (error) return <p>Error: {error}</p>;
 
         return (
-                <div className='task-list'>
-                        {sortedTasks.map((task) => (
-                                <TaskItem key={task.id} task={task} />
-                        ))}
-                </div>
+                <>
+                        <button
+                                className='fetch-tasks-button'
+                                onClick={refreshTasks}
+                        >
+                                Refresh Tasks
+                        </button>
+                        <div className='task-list'>
+                                {sortedTasks.map((task) => (
+                                        <TaskItem key={task.id} task={task} />
+                                ))}
+                        </div>
+                </>
         );
 };
 
