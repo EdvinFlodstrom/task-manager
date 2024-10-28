@@ -4,7 +4,7 @@ import { addTask } from '../redux/taskSlice/actions';
 import '../css/Button.css';
 import '../css/TaskForm.css';
 
-const TaskForm = () => {
+const TaskForm = ({ toggleForm }) => {
         const [title, setTitle] = useState('');
         const [description, setDescription] = useState('');
         const [dueDate, setDueDate] = useState('');
@@ -24,6 +24,9 @@ const TaskForm = () => {
                         setTitle('');
                         setDescription('');
                         setDueDate('');
+
+                        // Hide form after submitting task
+                        toggleForm();
                 }
         };
 

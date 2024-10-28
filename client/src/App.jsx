@@ -21,7 +21,7 @@ const App = () => {
                                         : 'Create New Task'}
                         </button>
 
-                        {showForm && <TaskForm />}
+                        {showForm && <TaskForm toggleForm={toggleForm} />}
 
                         <TaskList />
                 </div>
