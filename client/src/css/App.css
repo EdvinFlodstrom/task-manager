@@ -9,3 +9,15 @@ h1 {
 	margin-bottom: 1.5rem;
 	color: oklch(65% 0.1 252);
 }
+
+.create-task-button {
+	margin: 0.5rem;
+	padding: 0.6rem 1rem;
+	font-size: 1.25rem;
+	cursor: pointer;
+	border: none;
+	border-radius: 0.4rem;
+	background-color: oklch(65% 0.12 123);
+	color: oklch(98% 0 0);
+	transition: background-color 0.3s ease;
+}
