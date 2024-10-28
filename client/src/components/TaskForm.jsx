@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addTask } from '../redux/taskSlice/actions';
+import '../css/Button.css';
 import '../css/TaskForm.css';
 
 const TaskForm = () => {
@@ -46,7 +47,9 @@ const TaskForm = () => {
                                 onChange={(e) => setDueDate(e.target.value)}
                         />
 
-                        <button type='submit'>Add Task</button>
+                        <button type='submit' className='primary-button'>
+                                Add Task
+                        </button>
                 </form>
         );
 };

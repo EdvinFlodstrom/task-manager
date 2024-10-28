@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
+import './css/Button.css';
 import './css/App.css';
 
 const App = () => {
@@ -14,10 +15,7 @@ const App = () => {
                 <div className='app-container'>
                         <h1>Tasks:</h1>
 
-                        <button
-                                className='create-task-button'
-                                onClick={toggleForm}
-                        >
+                        <button className='primary-button' onClick={toggleForm}>
                                 {showForm
                                         ? 'Hide Task Form'
                                         : 'Create New Task'}

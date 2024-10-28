@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { updateTaskCompletion, deleteTask } from '../redux/taskSlice/actions';
+import '../css/Button.css';
 import '../css/TaskItem.css';
 
 const TaskItem = ({ task }) => {
@@ -22,7 +23,7 @@ const TaskItem = ({ task }) => {
         return (
                 <div className='task-item'>
                         <button
-                                className='task-delete-button'
+                                className='warning-button task-delete-button'
                                 onClick={handleDelete}
                         >
                                 Delete

@@ -7,6 +7,7 @@ import {
         selectError,
 } from '../redux/taskSlice/selectors';
 import TaskItem from './TaskItem';
+import '../css/Button.css';
 import '../css/TaskList.css';
 
 const TaskList = () => {
@@ -39,7 +40,7 @@ const TaskList = () => {
         return (
                 <>
                         <button
-                                className='fetch-tasks-button'
+                                className='primary-button fetch-tasks-button'
                                 onClick={refreshTasks}
                         >
                                 Refresh Tasks

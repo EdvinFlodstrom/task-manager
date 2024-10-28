@@ -4,7 +4,7 @@
 	align-items: center;
 	padding: 1rem;
 	border-bottom: 1px solid oklch(85% 0 0);
-	background-color: oklch(98% 0 0);
+	background-color: oklch(98% 0.03 250);
 	border-radius: 0.5rem;
 	transition: box-shadow 0.3s ease;
 }
@@ -14,17 +14,7 @@
 }
 
 .task-delete-button {
-	font-size: 1.25rem;
-	flex-basis: 15%;
-	width: 8rem;
-	height: 5rem;
-	background-color: oklch(50% 0.14 27);
-	color: oklch(98% 0 0);
-	border: none;
-	cursor: pointer;
-	padding: 0.5rem;
-	border-radius: 0.8rem;
-	transition: background-color 0.4s ease;
+	width: auto;
 }
 
 .task-delete-button:hover {
@@ -34,14 +24,14 @@
 .task-info {
 	flex-basis: 80%;
 	padding: 0 1rem;
-	font-size: 1.25rem;
-	color: oklch(30% 0 0);
+	font-size: 1.1rem;
+	color: oklch(35% 0.1 240);
 }
 
 .task-completed-checkbox {
 	flex-basis: 10%;
-	width: 3rem;
-	height: 3rem;
+	width: 1.5rem;
+	height: 1.5rem;
 	cursor: pointer;
 	accent-color: oklch(65% 0.12 123);
 }
