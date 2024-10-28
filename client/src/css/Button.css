@@ -31,3 +31,12 @@
 .warning-button:hover {
 	background-color: oklch(40% 0.14 27);
 }
+
+@media (max-width: 480px) {
+
+	.primary-button,
+	.warning-button {
+		padding: 0.35rem 0.5rem;
+		font-size: 0.8rem;
+	}
+}

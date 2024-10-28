@@ -13,8 +13,28 @@
 	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+@media (max-width: 768px) {
+	.task-item {
+		padding: 0.8rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.task-item {
+		padding: 0.6rem;
+	}
+}
+
 .task-delete-button {
 	width: auto;
+}
+
+@media (max-width: 480px) {
+	.task-delete-button {
+		padding: 0.3rem 0.6rem;
+		font-size: 0.75rem;
+		margin-bottom: 0.5rem;
+	}
 }
 
 .task-delete-button:hover {
@@ -28,10 +48,24 @@
 	color: oklch(35% 0.1 240);
 }
 
+@media (max-width: 480px) {
+	.task-info {
+		font-size: 0.8rem;
+		padding: 0.5rem 0;
+	}
+}
+
 .task-completed-checkbox {
 	flex-basis: 10%;
 	width: 1.5rem;
 	height: 1.5rem;
 	cursor: pointer;
 	accent-color: oklch(65% 0.12 123);
+}
+
+@media (max-width: 480px) {
+	.task-completed-checkbox {
+		width: 1.3rem;
+		height: 1.3rem;
+	}
 }

@@ -10,3 +10,19 @@ h1 {
 	margin-bottom: 1.5rem;
 	color: oklch(55% 0.15 250);
 }
+
+@media (max-width: 768px) {
+	.app-container {
+		max-width: 90%;
+		padding: 1rem;
+		font-size: 1.2rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.app-container {
+		max-width: 95%;
+		padding: 0.5rem;
+		font-size: 0.8rem;
+	}
+}
