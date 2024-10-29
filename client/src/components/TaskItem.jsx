@@ -17,6 +17,18 @@ const TaskItem = ({ task }) => {
         };
 
         const handleDelete = () => {
+                const now = Date.now();
+                const taskDueDate = new Date(task.dueDate);
+
+                // Ask the user if they really want to delete a task, the due date of which has yet to pass
+                if (taskDueDate > now) {
+                        const confirmDelete = window.confirm(
+                                'This task is still upcoming. Are you sure you want to delete it?',
+                        );
+
+                        if (!confirmDelete) return;
+                }
+
                 dispatch(deleteTask(task.id));
         };
 
