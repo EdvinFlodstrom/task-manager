@@ -20,6 +20,19 @@ const TaskItem = ({ task }) => {
                 dispatch(deleteTask(task.id));
         };
 
+        const formatDateForDisplay = (isoDate) => {
+                const date = new Date(isoDate);
+
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                const hours = String(date.getHours()).padStart(2, '0');
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+
+                // Format as dd/mm-yyyy hh:mm
+                return `${day}/${month}-${year} ${hours}:${minutes}`;
+        };
+
         return (
                 <div className='task-item'>
                         <button
@@ -31,7 +44,7 @@ const TaskItem = ({ task }) => {
                         <div className='task-info'>
                                 <h3>{task.title}</h3>
                                 <p>{task.description}</p>
-                                <p>Due: {task.dueDate}</p>
+                                <p>Due: {formatDateForDisplay(task.dueDate)}</p>
                         </div>
                         <input
                                 type='checkbox'
