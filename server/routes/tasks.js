@@ -9,7 +9,6 @@ import {
         validateDeleteTask,
 } from '../validators/tasks.js';
 import db from '../models/index.js';
-import { ContextHandlerImpl } from 'express-validator/lib/chain/context-handler-impl.js';
 const { Task } = db;
 
 const router = express.Router();
