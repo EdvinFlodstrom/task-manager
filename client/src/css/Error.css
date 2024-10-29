@@ -1,0 +1,14 @@
+.error-message {
+	color: oklch(40% 0.2 27);
+	font-size: 1rem;
+	margin-top: 1rem;
+	text-align: center;
+	padding: 0.8rem;
+	border-color: oklch(95% 0.08 27);
+	border: 1px solid oklch(50% 0.2 27);
+	border-radius: 0.5rem;
+	max-width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}

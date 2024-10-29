@@ -8,6 +8,7 @@ import {
 } from '../redux/taskSlice/selectors';
 import TaskItem from './TaskItem';
 import '../css/Button.css';
+import '../css/Error.css';
 import '../css/TaskList.css';
 
 const TaskList = () => {

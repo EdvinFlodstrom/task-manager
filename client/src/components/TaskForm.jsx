@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addTask } from '../redux/taskSlice/actions';
 import { selectError } from '../redux/taskSlice/reducer';
 import '../css/Button.css';
+import '../css/Error.css';
 import '../css/TaskForm.css';
 
 const TaskForm = () => {
