@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
         fetchTasks,
         addTask,
@@ -22,7 +22,7 @@ const taskSlice = createSlice({
         initialState: {
                 tasks: [],
                 loading: false,
-                error: null,
+                error: { message: null, type: null },
         },
         reducers: {},
         extraReducers: (builder) => {
@@ -56,8 +56,50 @@ const taskSlice = createSlice({
                                 state.tasks = state.tasks.filter(
                                         (task) => task.id !== action.payload,
                                 );
-                        });
+                        })
+                        .addMatcher(
+                                isAnyOf(
+                                        fetchTasks.rejected,
+                                        addTask.rejected,
+                                        updateTaskCompletion.rejected,
+                                        updateTaskDetails.rejected,
+                                        deleteTask.rejected,
+                                ),
+                                (state, action) => {
+                                        state.loading = false;
+                                        const actionType =
+                                                action.type.split('/')[1];
+
+                                        const backendErrorMessage =
+                                                action.payload?.errors?.[0]
+                                                        ?.msg ||
+                                                action.error.message;
+
+                                        state.error = {
+                                                message:
+                                                        backendErrorMessage ||
+                                                        'An error occured',
+                                                type: actionType,
+                                        };
+                                },
+                        )
+                        .addMatcher(
+                                isAnyOf(
+                                        fetchTasks.pending,
+                                        addTask.pending,
+                                        updateTaskCompletion.pending,
+                                        updateTaskDetails.pending,
+                                        deleteTask.pending,
+                                ),
+                                (state) => {
+                                        state.error = {
+                                                message: null,
+                                                type: null,
+                                        };
+                                },
+                        );
         },
 });
 
+export const selectError = (state) => state.tasks.error;
 export default taskSlice.reducer;

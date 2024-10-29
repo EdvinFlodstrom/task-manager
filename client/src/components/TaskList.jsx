@@ -35,7 +35,10 @@ const TaskList = () => {
                 .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
 
         if (loading) return <p>Loading...</p>;
-        if (error) return <p>Error: {error}</p>;
+
+        if (error.type === 'fetchTasks') {
+                return <p className='error-message'>Error: {error.message}</p>;
+        }
 
         return (
                 <>

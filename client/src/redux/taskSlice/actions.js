@@ -8,10 +8,20 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
         return response.data;
 });
 
-export const addTask = createAsyncThunk('tasks/addTask', async (task) => {
-        const response = await axios.post(tasksHttpAddress, task);
-        return response.data;
-});
+export const addTask = createAsyncThunk(
+        'tasks/addTask',
+        async (task, { rejectWithValue }) => {
+                try {
+                        const response = await axios.post(
+                                tasksHttpAddress,
+                                task,
+                        );
+                        return response.data;
+                } catch (error) {
+                        return rejectWithValue(error.response?.data);
+                }
+        },
+);
 
 export const updateTaskCompletion = createAsyncThunk(
         'tasks/updateTaskCompletion',
