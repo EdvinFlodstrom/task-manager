@@ -17,7 +17,9 @@ const router = express.Router();
 const convertTasksToTimezone = (tasks, timezone) => {
         if (!timezone) return tasks;
 
-        return tasks.map((task) => {
+        const tasksArray = Array.isArray(tasks) ? tasks : [tasks];
+
+        const convertedTasks = tasksArray.map((task) => {
                 // Convert UTC date to local time in specified timezone with correct offset
                 const utcDate = new Date(task.dueDate);
                 const offsetMinutes = utcDate.getTimezoneOffset();
@@ -40,12 +42,16 @@ const convertTasksToTimezone = (tasks, timezone) => {
                 task.dueDate = formattedDate;
                 return task;
         });
+
+        return Array.isArray(tasks) ? convertedTasks : convertedTasks[0];
 };
 
 router.get('/', async (req, res) => {
+        const { timezone } = req.query;
+
         try {
                 const tasks = await Task.findAll();
-                res.json(tasks);
+                res.json(convertTasksToTimezone(tasks, timezone));
         } catch (error) {
                 res.status(500).json({
                         message: 'Error fetching tasks',
@@ -59,7 +65,9 @@ router.post(
         validateCreateTask,
         handleValidationErrors,
         async (req, res) => {
+                const { timezone } = req.query;
                 const { title, description, dueDate } = req.body;
+
                 try {
                         const task = await Task.create({
                                 title,
@@ -67,7 +75,9 @@ router.post(
                                 dueDate,
                                 completed: false,
                         });
-                        res.status(201).json(task);
+                        res.status(201).json(
+                                convertTasksToTimezone(task, timezone),
+                        );
                 } catch (error) {
                         res.status(500).json({
                                 message: 'Error creating task',
@@ -83,14 +93,18 @@ router.patch(
         validateUpdateTaskCompleted,
         handleValidationErrors,
         async (req, res) => {
+                const { timezone } = req.query;
                 const { id } = req.params;
                 const { completed } = req.body;
+
                 try {
                         const task = await Task.findByPk(id);
                         if (task) {
                                 task.completed = completed;
                                 await task.save();
-                                res.json(task);
+                                res.json(
+                                        convertTasksToTimezone(task, timezone),
+                                );
                         } else {
                                 res.status(404).send('Task not found');
                         }
@@ -109,6 +123,7 @@ router.patch(
         validateUpdateTaskDetails,
         handleValidationErrors,
         async (req, res) => {
+                const { timezone } = req.query;
                 const { id } = req.params;
                 const { dueDate, description } = req.body;
 
@@ -118,7 +133,9 @@ router.patch(
                                 if (dueDate) task.dueDate = dueDate;
                                 if (description) task.description = description;
                                 await task.save();
-                                res.json(task);
+                                res.json(
+                                        convertTasksToTimezone(task, timezone),
+                                );
                         } else {
                                 res.status(404).send('Task not found');
                         }
@@ -136,11 +153,14 @@ router.delete(
         validateDeleteTask,
         handleValidationErrors,
         async (req, res) => {
+                const { timezone } = req.query;
                 const { id } = req.params;
+
                 try {
-                        const task = await Task.findByPk(id);
+                        let task = await Task.findByPk(id);
                         if (task) {
                                 await task.destroy();
+                                task = convertTasksToTimezone(task, timezone);
                                 res.json({
                                         message: 'Task deleted',
                                         task: task,
