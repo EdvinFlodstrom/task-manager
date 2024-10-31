@@ -13,6 +13,35 @@ const { Task } = db;
 
 const router = express.Router();
 
+// Helper function to convert from UTC to requested timezone
+const convertTasksToTimezone = (tasks, timezone) => {
+        if (!timezone) return tasks;
+
+        return tasks.map((task) => {
+                // Convert UTC date to local time in specified timezone with correct offset
+                const utcDate = new Date(task.dueDate);
+                const offsetMinutes = utcDate.getTimezoneOffset();
+
+                // Adjust the date by the offset to account for DST changes
+                const localDate = new Date(
+                        utcDate.getTime() - offsetMinutes * 60 * 1000,
+                );
+                const formattedDate = localDate.toLocaleString('en-US', {
+                        timeZone: timezone,
+                        hour12: false,
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                });
+
+                task.dueDate = formattedDate;
+                return task;
+        });
+};
+
 router.get('/', async (req, res) => {
         try {
                 const tasks = await Task.findAll();
