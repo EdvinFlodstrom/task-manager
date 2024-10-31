@@ -2,9 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const tasksHttpAddress = 'http://localhost:3001/tasks';
+const timezoneQuery = '?timezone=Europe/Stockholm';
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-        const response = await axios.get(tasksHttpAddress);
+        const response = await axios.get(`${tasksHttpAddress}${timezoneQuery}`);
         return response.data;
 });
 
@@ -13,7 +14,7 @@ export const addTask = createAsyncThunk(
         async (task, { rejectWithValue }) => {
                 try {
                         const response = await axios.post(
-                                tasksHttpAddress,
+                                `${tasksHttpAddress}${timezoneQuery}`,
                                 task,
                         );
                         return response.data;
@@ -27,7 +28,7 @@ export const updateTaskCompletion = createAsyncThunk(
         'tasks/updateTaskCompletion',
         async ({ id, completed }) => {
                 const response = await axios.patch(
-                        `${tasksHttpAddress}/${id}/completed`,
+                        `${tasksHttpAddress}/${id}/completed${timezoneQuery}`,
                         { completed },
                 );
                 return response.data;
@@ -38,7 +39,7 @@ export const updateTaskDetails = createAsyncThunk(
         'tasks/updateTaskDetails',
         async ({ id, details }) => {
                 const response = await axios.patch(
-                        `${tasksHttpAddress}/${id}/details`,
+                        `${tasksHttpAddress}/${id}/details${timezoneQuery}`,
                         details,
                 );
                 return response.data;
@@ -46,6 +47,8 @@ export const updateTaskDetails = createAsyncThunk(
 );
 
 export const deleteTask = createAsyncThunk('tasks/deleteTask', async (id) => {
-        const response = await axios.delete(`${tasksHttpAddress}/${id}`);
+        const response = await axios.delete(
+                `${tasksHttpAddress}/${id}${timezoneQuery}`,
+        );
         return id;
 });

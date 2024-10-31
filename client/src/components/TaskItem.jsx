@@ -17,11 +17,18 @@ const TaskItem = ({ task }) => {
         };
 
         const handleDelete = () => {
-                const now = Date.now();
-                const taskDueDate = new Date(task.dueDate);
-
                 // Ask the user if they really want to delete a task, the due date of which has yet to pass
-                if (taskDueDate > now) {
+
+                // Current time
+                const currentTime = new Date();
+
+                // Get task.dueDate and remove the trailing 'Z' to prevent JS from reading it as UTC
+                // The time is converted in the backend
+                // TODO: Find a less caveman-like solution to convert task.dueDate to a Date object without automatic timezone adjustments
+                const taskDueDateString = task.dueDate.slice(0, -1);
+                const taskDueDate = new Date(taskDueDateString);
+
+                if (taskDueDate > currentTime) {
                         const confirmDelete = window.confirm(
                                 'This task is still upcoming. Are you sure you want to delete it?',
                         );
@@ -32,17 +39,13 @@ const TaskItem = ({ task }) => {
                 dispatch(deleteTask(task.id));
         };
 
-        const formatDateForDisplay = (isoDate) => {
-                const date = new Date(isoDate);
-
-                const day = String(date.getDate()).padStart(2, '0');
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const year = date.getFullYear();
-                const hours = String(date.getHours()).padStart(2, '0');
-                const minutes = String(date.getMinutes()).padStart(2, '0');
+        const formatDateForDisplay = (date) => {
+                const [datePart, timePart] = date.split('T');
+                const [year, month, day] = datePart.split('-');
+                const [hour, minute] = timePart.split(':');
 
                 // Format as dd/mm-yyyy hh:mm
-                return `${day}/${month}-${year} ${hours}:${minutes}`;
+                return `${day}/${month}-${year} ${hour}:${minute}`;
         };
 
         return (
