@@ -19,6 +19,9 @@ const convertTasksToTimezone = (tasks, timezone) => {
 
         const tasksArray = Array.isArray(tasks) ? tasks : [tasks];
 
+        // TODO: Find proper solution to convert from UTC to given timezone
+        // This solution accurately translates the time, but keeps the 'Z' that marks it as a UTC time, which is wrong
+        // date-fns-tz did not seem to manage Swedish timezones well
         const convertedTasks = tasksArray.map((task) => {
                 // Convert UTC date to local time in specified timezone with correct offset
                 const utcDate = new Date(task.dueDate);
