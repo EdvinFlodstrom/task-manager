@@ -14,6 +14,7 @@ import db from '../models/index.js';
 const { Task } = db;
 const router = express.Router();
 
+// Fetch all tasks
 router.get('/', async (req, res) => {
         try {
                 const tasks = await Task.findAll();
@@ -26,6 +27,7 @@ router.get('/', async (req, res) => {
         }
 });
 
+// Fetch all upcoming, incomplete tasks
 router.get('/upcoming', async (req, res) => {
         try {
                 const today = new Date();
@@ -48,6 +50,7 @@ router.get('/upcoming', async (req, res) => {
         }
 });
 
+// Create a task with a title and due date, with an optional description
 router.post(
         '/',
         validateCreateTask,
@@ -72,7 +75,7 @@ router.post(
         },
 );
 
-// Route for changing only 'completed'
+// Change only 'completed'
 router.patch(
         '/:id/completed',
         validateUpdateTaskCompleted,
@@ -99,7 +102,7 @@ router.patch(
         },
 );
 
-// Route for changing everyting but 'completed'
+// Change description and/or due date
 router.patch(
         '/:id/details',
         validateUpdateTaskDetails,
@@ -127,6 +130,7 @@ router.patch(
         },
 );
 
+// Delete a single task
 router.delete(
         '/:id',
         validateDeleteTask,
