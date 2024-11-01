@@ -8,9 +8,10 @@ import {
         validateUpdateTaskDetails,
         validateDeleteTask,
 } from '../validators/tasks.js';
+import { Op } from 'sequelize';
 import db from '../models/index.js';
-const { Task } = db;
 
+const { Task } = db;
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -20,6 +21,28 @@ router.get('/', async (req, res) => {
         } catch (error) {
                 res.status(500).json({
                         message: 'Error fetching tasks',
+                        error: error.message,
+                });
+        }
+});
+
+router.get('/upcoming', async (req, res) => {
+        try {
+                const today = new Date();
+
+                const tasks = await Task.findAll({
+                        where: {
+                                dueDate: {
+                                        [Op.gte]: today,
+                                },
+                                completed: false,
+                        },
+                });
+
+                res.json(tasks);
+        } catch (error) {
+                res.status(500).json({
+                        message: 'Error fetching upcoming tasks',
                         error: error.message,
                 });
         }
