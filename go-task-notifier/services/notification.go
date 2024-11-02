@@ -86,10 +86,17 @@ func (ns *NotificationService) sendNotificationIfNotSent(task models.Task, notif
 		return // Notification has already been sent, skip
 	}
 
-	if err := ns.sendNotification(task, notificationType); err == nil {
-		ns.sentNotifications[notificationKey] = true // Mark the type of notification as sent
-	} else {
-		log.Printf("Failed to send notification of type %v for task %d: %v", notificationType, task.ID, err)
+	maxRetriesForFailedNotifications := 3
+	for i := 1; i <= maxRetriesForFailedNotifications; i++ {
+		err := ns.sendNotification(task, notificationType)
+
+		if err == nil {
+			ns.sentNotifications[notificationKey] = true
+			return
+		} else {
+			log.Printf("Attempt %d: Failed to send %s notifiction for task %d: %v", i, notificationType, task.ID, err)
+			time.Sleep(2 * time.Second)
+		}
 	}
 }
 
