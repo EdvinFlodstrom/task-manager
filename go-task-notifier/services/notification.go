@@ -66,5 +66,6 @@ func (ns *NotificationService) CheckAndNotify() {
 // Send a notification to the user
 // TODO: Adjust to send notification instead of logging
 func (ns *NotificationService) sendNotification(task models.Task, notificationType string) {
-	log.Printf("Sending %s for task '%s' due on %v", notificationType, task.Title, task.DueDate)
+	dueDateInLocal := task.DueDate.In(time.Local)
+	log.Printf("Sending %s for task '%s' due on %v", notificationType, task.Title, dueDateInLocal)
 }
